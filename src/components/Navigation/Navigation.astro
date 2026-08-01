@@ -11,7 +11,7 @@ const links = [
     { href: "/about", label: "About" },
 ];
 
-const path = Astro.url.pathname;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
 <header class="site-header">
