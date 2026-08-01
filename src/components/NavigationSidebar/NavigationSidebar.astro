@@ -1,0 +1,312 @@
+---
+import ThemeToggle from "../ThemeToggle/ThemeToggle.astro";
+import SectionHeader from "../SectionHeader/SectionHeader.astro";
+import Wordmark from "../Wordmark/Wordmark.astro";
+
+const links = [
+    { href: "/", label: "Home" },
+    { href: "/projects", label: "Projects" },
+    { href: "/blog", label: "Blog" },
+    { href: "/contact", label: "Contact" },
+    { href: "/about", label: "About" },
+];
+
+const path = Astro.url.pathname;
+---
+
+<button
+    class="menu-toggle"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+    aria-label="Open menu"
+>
+    <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 8h16" />
+        <path d="M4 16h16" />
+    </svg>
+    <svg class="close-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 6l12 12" />
+        <path d="M18 6L6 18" />
+    </svg>
+</button>
+
+<nav id="mobile-menu" class="mobile-menu" aria-label="Main navigation">
+    <div class="menu-top">
+        <Wordmark />
+    </div>
+
+    <div class="menu-body">
+        <SectionHeader label="Menu" />
+        <ul class="menu-links">
+            {
+                links.map((link, i) => (
+                    <li>
+                        <a href={link.href} aria-current={path === link.href ? "page" : undefined}>
+                            <span class="menu-number">{String(i + 1).padStart(2, "0")}</span>
+                            <span class="menu-label">{link.label}</span>
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+
+    <div class="menu-footer">
+        <div class="social-links">
+            <a href="#">GitHub</a>
+            <a href="#">LinkedIn</a>
+            <a href="mailto:replace-me@example.com">Email</a>
+        </div>
+        <ThemeToggle />
+    </div>
+</nav>
+
+<style>
+    .menu-toggle {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        color: var(--text);
+        position: relative;
+        z-index: 210;
+    }
+
+    .menu-toggle:hover {
+        color: var(--accent);
+    }
+
+    .menu-toggle.is-open {
+        color: var(--text);
+    }
+
+    .menu-icon,
+    .close-icon {
+        width: 28px;
+        height: 28px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+    }
+
+    .close-icon {
+        display: none;
+    }
+
+    .menu-toggle.is-open .menu-icon {
+        display: none;
+    }
+
+    .menu-toggle.is-open .close-icon {
+        display: block;
+    }
+
+    .mobile-menu {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100dvh;
+        background: var(--menu-bg);
+        color: var(--text);
+        display: flex;
+        flex-direction: column;
+        padding: var(--space-base);
+        overflow-y: auto;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 200ms ease;
+        z-index: 200;
+    }
+
+    .mobile-menu.is-open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .menu-top {
+        display: flex;
+        align-items: center;
+        height: var(--nav-height);
+        flex-shrink: 0;
+        color: var(--text);
+    }
+
+    .menu-body {
+        margin-top: var(--space-2xl);
+        max-width: 26rem;
+    }
+
+    .menu-links {
+        list-style: none;
+    }
+
+    .menu-links li {
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .menu-links li:first-child {
+        border-top: 1px solid var(--border-light);
+    }
+
+    .menu-links a {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-base);
+        color: var(--text);
+        text-decoration: none;
+        padding: var(--space-base) 0;
+        transition: color var(--transition-fast);
+    }
+
+    .menu-number {
+        font-family: var(--mono);
+        font-size: var(--text-small);
+        color: var(--accent-gold);
+        width: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .menu-label {
+        font-family: var(--serif);
+        font-size: var(--text-h1);
+        font-weight: 600;
+        line-height: 1.1;
+    }
+
+    .menu-links a[aria-current="page"] .menu-label {
+        color: var(--accent);
+    }
+
+    .menu-links a:hover .menu-label {
+        color: var(--accent);
+    }
+
+    .menu-footer {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-base);
+        margin-top: var(--space-2xl);
+        padding-top: var(--space-base);
+        border-top: 1px solid var(--border-light);
+        flex-shrink: 0;
+    }
+
+    .social-links {
+        display: flex;
+        gap: var(--space-lg);
+    }
+
+    .social-links a {
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--sans);
+        font-size: var(--text-small);
+        transition: color var(--transition-fast);
+    }
+
+    .social-links a:hover {
+        color: var(--accent);
+    }
+
+    @media (min-width: 768px) {
+        .menu-toggle,
+        .mobile-menu {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    function initMobileMenu() {
+        const button = document.querySelector<HTMLButtonElement>(".menu-toggle");
+        const menu = document.querySelector<HTMLElement>(".mobile-menu");
+        if (!button || !menu) return;
+
+        let lastFocused: HTMLElement | null = null;
+
+        function focusable(): HTMLElement[] {
+            return [
+                button!,
+                ...Array.from(
+                    menu!.querySelectorAll<HTMLElement>("a[href], button:not([disabled])"),
+                ),
+            ];
+        }
+
+        function openMenu() {
+            lastFocused = document.activeElement as HTMLElement | null;
+
+            button!.classList.add("is-open");
+            menu!.classList.add("is-open");
+            button!.setAttribute("aria-expanded", "true");
+            button!.setAttribute("aria-label", "Close menu");
+            document.body.classList.add("menu-open");
+
+            const first = menu!.querySelector<HTMLElement>("a[href]");
+            first?.focus();
+
+            document.addEventListener("keydown", onKeydown);
+            document.addEventListener("click", onClickOutside, true);
+        }
+
+        function closeMenu() {
+            button!.classList.remove("is-open");
+            menu!.classList.remove("is-open");
+            button!.setAttribute("aria-expanded", "false");
+            button!.setAttribute("aria-label", "Open menu");
+            document.body.classList.remove("menu-open");
+
+            document.removeEventListener("keydown", onKeydown);
+            document.removeEventListener("click", onClickOutside, true);
+
+            (lastFocused ?? button)?.focus();
+        }
+
+        function onKeydown(event: KeyboardEvent) {
+            if (event.key === "Escape") {
+                closeMenu();
+                return;
+            }
+
+            if (event.key !== "Tab") return;
+
+            const items = focusable();
+            const currentIndex = items.indexOf(document.activeElement as HTMLElement);
+
+            if (event.shiftKey) {
+                if (currentIndex <= 0) {
+                    event.preventDefault();
+                    items[items.length - 1]?.focus();
+                }
+            } else {
+                if (currentIndex === items.length - 1 || currentIndex === -1) {
+                    event.preventDefault();
+                    items[0]?.focus();
+                }
+            }
+        }
+
+        function onClickOutside(event: MouseEvent) {
+            const target = event.target as Node;
+            if (!menu!.contains(target) && !button!.contains(target)) {
+                closeMenu();
+            }
+        }
+
+        button.addEventListener("click", () => {
+            const opened = button.getAttribute("aria-expanded") === "true";
+            opened ? closeMenu() : openMenu();
+        });
+
+        menu.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", closeMenu);
+        });
+    }
+
+    initMobileMenu();
+</script>

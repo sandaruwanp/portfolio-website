@@ -1,0 +1,48 @@
+---
+import "../styles/global.css";
+import Navigation from "../components/Navigation/Navigation.astro";
+import Footer from "../components/Footer/Footer.astro";
+
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const { title, description = "Portfolio and Blog" } = Astro.props;
+---
+
+<html lang="en">
+    <head>
+        <script is:inline>
+            (function () {
+                var s = localStorage.getItem("theme");
+                var d = window.matchMedia("(prefers-color-scheme:dark)").matches;
+                if (s === "dark" || (!s && d)) document.documentElement.setAttribute("data-theme", "dark");
+                else if (s === "light") document.documentElement.setAttribute("data-theme", "light");
+            })();
+        </script>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="description" content={description} />
+        <title>{title}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        />
+    </head>
+    <body>
+        <a href="#main" class="skip-link">Skip to content</a>
+        <Navigation />
+        <main id="main" tabindex="-1">
+            <slot />
+        </main>
+        <Footer />
+    </body>
+</html>
+
+<script>
+    import "../scripts/codeCopy.ts";
+</script>

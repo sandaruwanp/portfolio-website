@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+import SectionHeader from "../SectionHeader/SectionHeader.astro";
+import ProjectRow from "../ProjectRow/ProjectRow.astro";
+
+const projects = (await getCollection("projects"))
+    .filter((project) => project.data.featured)
+    .sort((a, b) => a.data.order - b.data.order);
+---
+
+<section class="featured-projects">
+    <SectionHeader label="Selected Work" />
+    <ol>
+        {
+            projects.map((project, i) => (
+                <ProjectRow
+                    index={i + 1}
+                    title={project.data.title}
+                    slug={project.id}
+                    tags={project.data.tags}
+                />
+            ))
+        }
+    </ol>
+</section>
+
+<style>
+    .featured-projects {
+        padding-inline: var(--space-base);
+        max-width: var(--content-max);
+        margin-inline: auto;
+        margin-top: var(--space-2xl);
+    }
+
+    ol {
+        list-style: none;
+    }
+</style>

@@ -1,0 +1,43 @@
+---
+import BaseLayoutAstroComponent from "../layouts/BaseLayout.astro";
+import SectionHeader from "../components/SectionHeader/SectionHeader.astro";
+---
+
+<BaseLayoutAstroComponent
+    title="About — Sandaruwan Pathirana"
+    description="A bit about who I am and what I do"
+>
+    <div class="reading-width page">
+        <SectionHeader label="About" />
+        <p>
+            Write a couple paragraphs here about who you are, what you work on, and
+            what you care about. Be specific — mention actual tools, actual
+            projects, actual interests. Generic "passionate developer" language is
+            filler and readers skip it.
+        </p>
+        <p>
+            You can reach me at <a href="mailto:you@yourdomain.com"
+                >you@yourdomain.com</a
+            >.
+        </p>
+    </div>
+</BaseLayoutAstroComponent>
+
+<style>
+    .page {
+        padding-top: var(--space-xl);
+    }
+
+    p {
+        font-family: var(--serif);
+        font-size: var(--text-body);
+        font-weight: 400;
+        color: var(--text-sec);
+        line-height: 1.618;
+        margin-bottom: var(--space-md);
+    }
+
+    a {
+        color: var(--accent);
+    }
+</style>

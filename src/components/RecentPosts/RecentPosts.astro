@@ -1,0 +1,70 @@
+---
+import { getCollection } from "astro:content";
+import SectionHeader from "../SectionHeader/SectionHeader.astro";
+
+const posts = (await getCollection("blog"))
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+    .slice(0, 3);
+---
+
+<section class="recent-posts">
+    <SectionHeader label="Writings" />
+    <ul>
+        {
+            posts.map((post) => (
+                <li>
+                    <a href={`/blog/${post.id}`}>{post.data.title}</a>
+                    <time datetime={post.data.pubDate.toISOString()}>
+                        {post.data.pubDate.toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        })}
+                    </time>
+                </li>
+            ))
+        }
+    </ul>
+</section>
+
+<style>
+    .recent-posts {
+        padding-inline: var(--space-base);
+        max-width: var(--content-max);
+        margin-inline: auto;
+        margin-top: var(--space-2xl);
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    li {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--space-base);
+        padding: var(--space-sm) 0;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    a {
+        font-family: var(--serif);
+        font-size: var(--text-h3);
+        font-weight: 600;
+        color: var(--text);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+    }
+
+    a:hover {
+        color: var(--accent);
+    }
+
+    time {
+        font-family: var(--mono);
+        font-size: var(--text-xs);
+        color: var(--text-ter);
+        white-space: nowrap;
+    }
+</style>

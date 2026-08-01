@@ -1,0 +1,64 @@
+---
+import BaseLayoutAstroComponent from "../layouts/BaseLayout.astro";
+import SectionHeader from "../components/SectionHeader/SectionHeader.astro";
+
+const rows = [
+    { label: "Email", value: "replace-me@example.com", href: "mailto:replace-me@example.com" },
+    { label: "GitHub", value: "github.com/replace-me", href: "#" },
+    { label: "LinkedIn", value: "linkedin.com/in/replace-me", href: "#" },
+];
+---
+
+<BaseLayoutAstroComponent
+    title="Contact — Sandaruwan Pathirana"
+    description="Get in touch."
+>
+    <div class="reading-width page">
+        <SectionHeader label="Contact" />
+        <div class="rows">
+            {
+                rows.map((row) => (
+                    <div class="row">
+                        <span class="label">{row.label}</span>
+                        <a class="value" href={row.href}>
+                            {row.value}
+                        </a>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</BaseLayoutAstroComponent>
+
+<style>
+    .page {
+        padding-top: var(--space-xl);
+    }
+
+    .row {
+        display: flex;
+        gap: var(--space-base);
+        padding: var(--space-sm) 0;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .label {
+        font-family: var(--mono);
+        font-size: var(--text-small);
+        font-weight: 500;
+        color: var(--text-ter);
+        width: 5.5rem;
+        flex-shrink: 0;
+    }
+
+    .value {
+        font-family: var(--sans);
+        font-size: var(--text-body);
+        color: var(--accent);
+        text-decoration: none;
+    }
+
+    .value:hover {
+        color: var(--accent-hover);
+    }
+</style>

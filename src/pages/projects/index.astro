@@ -1,0 +1,60 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayoutAstroComponent from "../../layouts/BaseLayout.astro";
+import ProjectCardAstroComponent from "../../components/ProjectCard/ProjectCard.astro";
+
+const projects = (await getCollection("projects")).sort(
+    (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayoutAstroComponent
+    title="Projects — Sandaruwan Pathirana"
+    description="A selection of things I've built."
+>
+    <div class="content-width page">
+        <h1>Projects</h1>
+        <p class="lede">A selection of the things I've built.</p>
+        <div class="grid">
+            {
+                projects.map((project, i) => (
+                    <ProjectCardAstroComponent
+                        index={i + 1}
+                        title={project.data.title}
+                        description={project.data.description}
+                        link={project.data.link}
+                        tags={project.data.tags}
+                        slug={project.id}
+                    />
+                ))
+            }
+        </div>
+    </div>
+</BaseLayoutAstroComponent>
+
+<style>
+    .page {
+        padding-top: var(--space-xl);
+    }
+
+    h1 {
+        font-family: var(--serif);
+        font-size: var(--text-h1);
+        font-weight: 600;
+    }
+
+    .lede {
+        font-family: var(--serif);
+        font-size: var(--text-h3);
+        font-weight: 400;
+        color: var(--text-sec);
+        margin-top: var(--space-sm);
+        margin-bottom: var(--space-lg);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+        gap: var(--space-base);
+    }
+</style>

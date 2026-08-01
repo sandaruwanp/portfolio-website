@@ -1,0 +1,91 @@
+---
+import Tag from "../Tag/Tag.astro";
+import { toRoman } from "../../utils/roman";
+
+interface Props {
+    title: string;
+    description: string;
+    link: string;
+    tags: string[];
+    slug?: string;
+    index?: number;
+}
+
+const { title, description, link, tags, slug, index } = Astro.props;
+---
+
+<article class="project-card">
+    {index !== undefined && <span class="numeral">{toRoman(index)}</span>}
+    <h3>
+        {slug ? <a href={`/projects/${slug}`}>{title}</a> : title}
+    </h3>
+    <p class="description">{description}</p>
+    <ul class="tags">
+        {tags.map((tag) => <Tag label={tag} />)}
+    </ul>
+    <a class="repo-link" href={link} target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
+</article>
+
+<style>
+    .project-card {
+        padding: var(--space-base);
+        border-bottom: 2px solid var(--border-light);
+        transition: border-color var(--transition-fast);
+    }
+
+    .project-card:hover {
+        border-color: var(--accent);
+    }
+
+    .numeral {
+        display: block;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: var(--text-small);
+        color: var(--accent-gold);
+        margin-bottom: var(--space-xs);
+    }
+
+    h3 {
+        font-family: var(--serif);
+        font-size: var(--text-h2);
+        font-weight: 600;
+    }
+
+    h3 a {
+        color: var(--text);
+        text-decoration: none;
+    }
+
+    h3 a:hover {
+        color: var(--accent);
+    }
+
+    .description {
+        font-family: var(--sans);
+        font-size: var(--text-small);
+        color: var(--text-sec);
+        line-height: 1.6;
+        margin-top: var(--space-xs);
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+        margin-top: var(--space-sm);
+    }
+
+    .repo-link {
+        display: inline-block;
+        font-family: var(--mono);
+        font-size: var(--text-small);
+        color: var(--accent);
+        text-decoration: none;
+        margin-top: var(--space-sm);
+    }
+
+    .repo-link:hover {
+        color: var(--accent-hover);
+    }
+</style>

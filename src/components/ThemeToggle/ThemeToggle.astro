@@ -1,0 +1,62 @@
+---
+---
+
+<button type="button" class="theme-toggle" aria-label="Toggle theme" aria-pressed="false">
+    <span class="icon icon-moon" aria-hidden="true">&#9789;</span>
+    <span class="icon icon-sun" aria-hidden="true">&#9728;</span>
+</button>
+
+<style>
+    .theme-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        color: var(--text-ter);
+        font-size: var(--text-h3);
+        line-height: 1;
+        padding: var(--space-xs);
+        transition: color var(--transition-fast);
+    }
+
+    .theme-toggle:hover {
+        color: var(--text-sec);
+    }
+
+    .icon-sun {
+        display: none;
+    }
+
+    :global(:root[data-theme="dark"]) .icon-moon {
+        display: none;
+    }
+
+    :global(:root[data-theme="dark"]) .icon-sun {
+        display: inline;
+    }
+</style>
+
+<script>
+    function effectiveTheme(): "light" | "dark" {
+        const stored = document.documentElement.dataset.theme;
+        if (stored === "dark" || stored === "light") return stored;
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+
+    function syncPressed(button: HTMLButtonElement) {
+        button.setAttribute("aria-pressed", String(effectiveTheme() === "dark"));
+    }
+
+    document.querySelectorAll<HTMLButtonElement>(".theme-toggle").forEach((button) => {
+        syncPressed(button);
+
+        button.addEventListener("click", () => {
+            const next = effectiveTheme() === "dark" ? "light" : "dark";
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem("theme", next);
+
+            document.querySelectorAll<HTMLButtonElement>(".theme-toggle").forEach(syncPressed);
+        });
+    });
+</script>

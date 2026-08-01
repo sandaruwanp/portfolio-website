@@ -1,0 +1,36 @@
+---
+interface Props {
+    label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="section-header">
+    <span class="label">{label}</span>
+    <span class="line" aria-hidden="true"></span>
+</div>
+
+<style>
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-base);
+    }
+
+    .label {
+        font-family: var(--mono);
+        font-size: var(--text-xs);
+        color: var(--accent-gold);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .line {
+        flex: 1;
+        height: 1px;
+        background: var(--border-light);
+    }
+</style>

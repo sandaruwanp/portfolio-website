@@ -1,0 +1,71 @@
+---
+import Tag from "../Tag/Tag.astro";
+import { toRoman } from "../../utils/roman";
+
+interface Props {
+    index: number;
+    title: string;
+    slug: string;
+    tags: string[];
+}
+
+const { index, title, slug, tags } = Astro.props;
+---
+
+<li class="project-row">
+    <span class="numeral">{toRoman(index)}</span>
+    <a href={`/projects/${slug}`} class="title">{title}</a>
+    <span class="leader" aria-hidden="true"></span>
+    <ul class="tags">
+        {tags.map((tag) => <Tag label={tag} />)}
+    </ul>
+</li>
+
+<style>
+    .project-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        column-gap: var(--space-sm);
+        row-gap: var(--space-xs);
+        padding: var(--space-sm) 0;
+        border-bottom: 1px solid var(--border-light);
+        list-style: none;
+    }
+
+    .numeral {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: var(--text-small);
+        color: var(--accent-gold);
+        width: 24px;
+        flex-shrink: 0;
+    }
+
+    .title {
+        font-family: var(--serif);
+        font-size: var(--text-h3);
+        font-weight: 600;
+        color: var(--text);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+    }
+
+    .title:hover {
+        color: var(--accent);
+    }
+
+    .leader {
+        flex: 1 1 20px;
+        min-width: 20px;
+        border-bottom: 1px dotted var(--border);
+        align-self: center;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+        flex-shrink: 0;
+    }
+</style>

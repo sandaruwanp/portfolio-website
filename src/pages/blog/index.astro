@@ -1,0 +1,49 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayoutAstroComponent from "../../layouts/BaseLayout.astro";
+import BlogEntry from "../../components/BlogEntry/BlogEntry.astro";
+
+const posts = (await getCollection("blog")).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<BaseLayoutAstroComponent
+    title="Blog - Sandaruwan Pathirana"
+    description="Writing on things I'm learning and experimenting."
+>
+    <div class="content-width page">
+        <h1>Writings</h1>
+        <ul>
+            {
+                posts.map((post) => (
+                    <BlogEntry
+                        title={post.data.title}
+                        description={post.data.description}
+                        pubDate={post.data.pubDate}
+                        tags={post.data.tags}
+                        readingTime={post.data.readingTime}
+                        slug={post.id}
+                    />
+                ))
+            }
+        </ul>
+    </div>
+</BaseLayoutAstroComponent>
+
+<style>
+    .page {
+        padding-top: var(--space-xl);
+    }
+
+    h1 {
+        font-family: var(--serif);
+        font-size: var(--text-h1);
+        font-weight: 600;
+        margin-bottom: var(--space-lg);
+    }
+
+    ul {
+        list-style: none;
+    }
+</style>

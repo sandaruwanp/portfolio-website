@@ -1,0 +1,100 @@
+---
+import NavigationSidebar from "../NavigationSidebar/NavigationSidebar.astro";
+import ThemeToggle from "../ThemeToggle/ThemeToggle.astro";
+import Wordmark from "../Wordmark/Wordmark.astro";
+
+const links = [
+    { href: "/", label: "Home" },
+    { href: "/projects", label: "Projects" },
+    { href: "/blog", label: "Blog" },
+    { href: "/contact", label: "Contact" },
+    { href: "/about", label: "About" },
+];
+
+const path = Astro.url.pathname;
+---
+
+<header class="site-header">
+    <a href="/" class="logo">
+        <Wordmark />
+    </a>
+
+    <nav class="desktop-nav" aria-label="Main navigation">
+        <ul>
+            {
+                links.map((link) => (
+                    <li>
+                        <a
+                            href={link.href}
+                            aria-current={path === link.href ? "page" : undefined}
+                        >
+                            {link.label}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+        <ThemeToggle />
+    </nav>
+
+    <NavigationSidebar />
+</header>
+
+<style>
+    .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        height: var(--nav-height);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-inline: var(--space-base);
+        background: var(--bg);
+    }
+
+    .logo {
+        color: var(--text);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+    }
+
+    .logo:hover {
+        color: var(--accent);
+    }
+
+    .desktop-nav {
+        display: none;
+    }
+
+    .desktop-nav ul {
+        list-style: none;
+        display: flex;
+        gap: var(--space-base);
+    }
+
+    .desktop-nav a {
+        font-family: var(--sans);
+        font-size: var(--text-small);
+        color: var(--text-ter);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+    }
+
+    .desktop-nav a[aria-current="page"] {
+        color: var(--accent);
+        font-weight: 500;
+    }
+
+    .desktop-nav a:hover {
+        color: var(--text-sec);
+    }
+
+    @media (min-width: 768px) {
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+    }
+</style>
