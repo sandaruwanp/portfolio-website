@@ -15,29 +15,31 @@ const path = Astro.url.pathname;
 ---
 
 <header class="site-header">
-    <a href="/" class="logo">
-        <Wordmark />
-    </a>
+    <div class="header-inner">
+        <a href="/" class="logo">
+            <Wordmark />
+        </a>
 
-    <nav class="desktop-nav" aria-label="Main navigation">
-        <ul>
-            {
-                links.map((link) => (
-                    <li>
-                        <a
-                            href={link.href}
-                            aria-current={path === link.href ? "page" : undefined}
-                        >
-                            {link.label}
-                        </a>
-                    </li>
-                ))
-            }
-        </ul>
-        <ThemeToggle />
-    </nav>
+        <nav class="desktop-nav" aria-label="Main navigation">
+            <ul>
+                {
+                    links.map((link) => (
+                        <li>
+                            <a
+                                href={link.href}
+                                aria-current={path === link.href ? "page" : undefined}
+                            >
+                                {link.label}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+            <ThemeToggle />
+        </nav>
 
-    <NavigationSidebar />
+        <NavigationSidebar />
+    </div>
 </header>
 
 <style>
@@ -46,11 +48,16 @@ const path = Astro.url.pathname;
         top: 0;
         z-index: 100;
         height: var(--nav-height);
+        background: var(--bg);
+    }
+
+    .header-inner {
+        max-width: var(--content-max);
+        margin-inline: auto;
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-inline: var(--space-base);
-        background: var(--bg);
     }
 
     .logo {

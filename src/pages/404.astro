@@ -12,19 +12,21 @@ const links = [
     title="404 — Sandaruwan Pathirana"
     description="Page not found."
 >
-    <div class="reading-width page" role="alert">
-        <h1>404</h1>
-        <p>The page you requested could not be found.</p>
-        <span class="gold-bar" aria-hidden="true"></span>
-        <ul>
-            {
-                links.map((link) => (
-                    <li>
-                        <a href={link.href}>&rarr; {link.label}</a>
-                    </li>
-                ))
-            }
-        </ul>
+    <div class="content-width page" role="alert">
+        <div class="prose">
+            <h1>404</h1>
+            <p>The page you requested could not be found.</p>
+            <span class="gold-bar" aria-hidden="true"></span>
+            <ul>
+                {
+                    links.map((link) => (
+                        <li>
+                            <a href={link.href}>&rarr; {link.label}</a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
     </div>
 </BaseLayoutAstroComponent>
 

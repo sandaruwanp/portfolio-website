@@ -19,29 +19,31 @@ const { Content } = await render(project);
     title={project.data.title}
     description={project.data.description}
 >
-    <div class="reading-width page">
-        <nav aria-label="Back navigation">
-            <a href="/projects">&larr; Back to Projects</a>
-        </nav>
-        <article>
-            <h1>{project.data.title}</h1>
+    <div class="content-width page">
+        <div class="prose">
+            <nav aria-label="Back navigation">
+                <a href="/projects">&larr; Back to Projects</a>
+            </nav>
+            <article>
+                <h1>{project.data.title}</h1>
 
-            <div class="meta">
-                <ul class="tags">
-                    {project.data.tags.map((tag) => <Tag label={tag} />)}
-                </ul>
+                <div class="meta">
+                    <ul class="tags">
+                        {project.data.tags.map((tag) => <Tag label={tag} />)}
+                    </ul>
 
-                <a class="repo-link" href={project.data.link} target="_blank" rel="noopener noreferrer">
-                    View on GitHub &rarr;
-                </a>
-            </div>
+                    <a class="repo-link" href={project.data.link} target="_blank" rel="noopener noreferrer">
+                        View on GitHub &rarr;
+                    </a>
+                </div>
 
-            <p class="description">{project.data.description}</p>
+                <p class="description">{project.data.description}</p>
 
-            <div class="body">
-                <Content />
-            </div>
-        </article>
+                <div class="body">
+                    <Content />
+                </div>
+            </article>
+        </div>
     </div>
 </BaseLayoutAstroComponent>
 

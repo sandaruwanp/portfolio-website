@@ -28,9 +28,8 @@ a {
 	margin-inline: auto;
 }
 
-.reading-width {
+.prose {
 	max-width: var(--reading-max);
-	margin-inline: auto;
 }
 
 .skip-link {

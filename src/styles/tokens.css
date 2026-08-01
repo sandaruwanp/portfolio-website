@@ -40,8 +40,8 @@
     --space-2xl: clamp(3.4375rem, 2rem + 4vw, 5.5625rem);
     --space-3xl: clamp(5.5625rem, 3rem + 6vw, 9rem);
 
-    --content-max: min(47.5rem, 100% - 2.625rem);
-    --reading-max: min(38.125rem, 100% - 2.625rem);
+    --content-max: min(80rem, 100% - 2.625rem);
+    --reading-max: 43.75rem;
     --nav-height: 3.4375rem;
 
     --transition: 300ms ease;
