@@ -1,7 +1,5 @@
 ---
 import ThemeToggle from "../ThemeToggle/ThemeToggle.astro";
-import SectionHeader from "../SectionHeader/SectionHeader.astro";
-import Wordmark from "../Wordmark/Wordmark.astro";
 
 const links = [
     { href: "/", label: "Home" },
@@ -32,11 +30,10 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 
 <nav id="mobile-menu" class="mobile-menu" aria-label="Main navigation">
     <div class="menu-top">
-        <Wordmark />
+        <span class="menu-top-label">Menu</span>
     </div>
 
     <div class="menu-body">
-        <SectionHeader label="Menu" />
         <ul class="menu-links">
             {
                 links.map((link, i) => (
@@ -115,7 +112,8 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
         color: var(--text);
         display: flex;
         flex-direction: column;
-        padding: var(--space-base);
+        padding-inline: var(--space-base);
+        padding-bottom: var(--space-base);
         overflow-y: auto;
         opacity: 0;
         pointer-events: none;
@@ -134,6 +132,14 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
         height: var(--nav-height);
         flex-shrink: 0;
         color: var(--text);
+    }
+
+    .menu-top-label {
+        font-family: var(--mono);
+        font-size: var(--text-xs);
+        color: var(--accent-gold);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
     }
 
     .menu-body {

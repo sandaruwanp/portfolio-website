@@ -14,8 +14,10 @@ const { index, title, slug, tags } = Astro.props;
 
 <li class="project-row">
     <span class="numeral">{toRoman(index)}</span>
-    <a href={`/projects/${slug}`} class="title">{title}</a>
-    <span class="leader" aria-hidden="true"></span>
+    <div class="title-group">
+        <a href={`/projects/${slug}`} class="title">{title}</a>
+        <span class="leader" aria-hidden="true"></span>
+    </div>
     <ul class="tags">
         {tags.map((tag) => <Tag label={tag} />)}
     </ul>
@@ -25,7 +27,7 @@ const { index, title, slug, tags } = Astro.props;
     .project-row {
         display: flex;
         flex-wrap: wrap;
-        align-items: baseline;
+        align-items: center;
         column-gap: var(--space-sm);
         row-gap: var(--space-xs);
         padding: var(--space-sm) 0;
@@ -40,6 +42,14 @@ const { index, title, slug, tags } = Astro.props;
         color: var(--accent-gold);
         width: 24px;
         flex-shrink: 0;
+    }
+
+    .title-group {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        flex: 1 1 auto;
+        min-width: 0;
     }
 
     .title {
@@ -66,6 +76,6 @@ const { index, title, slug, tags } = Astro.props;
         display: flex;
         flex-wrap: wrap;
         gap: var(--space-xs);
-        flex-shrink: 0;
+        flex: 0 0 auto;
     }
 </style>
