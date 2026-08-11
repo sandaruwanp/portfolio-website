@@ -13,8 +13,8 @@ const { index, title, slug, tags } = Astro.props;
 ---
 
 <li class="project-row">
-    <span class="numeral">{toRoman(index)}</span>
-    <div class="title-group">
+    <div class="row-head">
+        <span class="numeral">{toRoman(index)}</span>
         <a href={`/projects/${slug}`} class="title">{title}</a>
         <span class="leader" aria-hidden="true"></span>
     </div>
@@ -35,6 +35,14 @@ const { index, title, slug, tags } = Astro.props;
         list-style: none;
     }
 
+    .row-head {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-sm);
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
     .numeral {
         font-family: var(--serif);
         font-style: italic;
@@ -44,14 +52,6 @@ const { index, title, slug, tags } = Astro.props;
         flex-shrink: 0;
     }
 
-    .title-group {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-        flex: 1 1 auto;
-        min-width: 0;
-    }
-
     .title {
         font-family: var(--serif);
         font-size: var(--text-h3);
@@ -59,6 +59,8 @@ const { index, title, slug, tags } = Astro.props;
         color: var(--text);
         text-decoration: none;
         transition: color var(--transition-fast);
+        flex: 1 1 auto;
+        min-width: 0;
     }
 
     .title:hover {
